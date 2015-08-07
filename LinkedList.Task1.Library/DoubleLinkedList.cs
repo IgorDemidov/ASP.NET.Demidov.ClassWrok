@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LinkedList.Task1.Library
 {
-    public class CustomLinkedList<T>
+    public class DoubleLinkedList<T>
     {
         private Node<T> root;
         private int count = 0;
@@ -17,11 +17,11 @@ namespace LinkedList.Task1.Library
 
         public T Last { get { return root.Data; } }
 
-        public CustomLinkedList()
+        public DoubleLinkedList()
         {
         }
 
-        public CustomLinkedList(IEnumerable<T> collection): this()
+        public DoubleLinkedList(IEnumerable<T> collection): this()
         {
             foreach (var item in collection)
             {
@@ -42,6 +42,11 @@ namespace LinkedList.Task1.Library
             count++;
         }
 
+        public void Clear()
+        {
+            root = null;
+        }
+
         public bool Contains(T data)
         {
             if (root == null)
@@ -57,7 +62,7 @@ namespace LinkedList.Task1.Library
             return false;
         }
 
-        public void Remove(T data)
+        public bool Remove(T data)
         {
             if (root == null)
                 throw new ArgumentNullException();
@@ -78,9 +83,9 @@ namespace LinkedList.Task1.Library
                     prev.Next = next;
                 if (next != null)
                     next.Prev = prev;
+                return true;
             }
-
-
+            return false;
         }
 
         private void AddFirst(T data)
@@ -105,12 +110,12 @@ namespace LinkedList.Task1.Library
 
         public  class CustomEnumerator: IEnumerator<T>
         {
-            CustomLinkedList<T> list;
+            DoubleLinkedList<T> list;
             int position;
             Node<T> currNode;
             
 
-            public CustomEnumerator(CustomLinkedList<T> list)
+            public CustomEnumerator(DoubleLinkedList<T> list)
             {
                 this.list = list;
                 Reset();

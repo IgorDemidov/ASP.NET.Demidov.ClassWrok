@@ -17,6 +17,7 @@ namespace BinaryTree.Task2.Library
             get { return data; }
             set { data = value; }
         }
+
         public BinaryNode() { }
         public BinaryNode(T data, BinaryNode<T> left, BinaryNode<T> right)
         {

@@ -8,42 +8,50 @@ namespace HashTable.Task3.Library
 {
     public class CustomHashTable<TKey, TValue>
     {
-        private object[] indexes;
+        private Segment[] segments;
         private List<TKey> keys;
-        private List<List<TValue>> values;
-        private float loadFactor = 1.0f;
-        private int capacity = 0;
+        private List<TValue> values;
+        private int capacity;
         private int count;
 
-        public CustomHashTable() : this(0, 1.0f) { }
-        public CustomHashTable(int capacity) : this(capacity, 1.0f) { }
-        public CustomHashTable(int capacity, float loadFactor) //main ctor
+        public CustomHashTable() : this(0) { }
+        public CustomHashTable(int capacity)   //main ctor
         {
-            indexes = new object[capacity];
-        }
-
-        public int GetIndex(TKey key)
-        {
-            int index;
-            unchecked
-            {
-                int hash = key.GetHashCode();
-                index = Math.Abs(hash % (int.MaxValue));
-            }
-            return index;
+            segments = new Segment[capacity];
         }
 
         public void Add(TKey key, TValue value)
         {
-            if ((key==null)||(value ==null))
-                throw new ArgumentNullException("Key or/and value cannot be null");
-
-            int index = GetIndex(key);
-            if (index > capacity-1)
-
-            keys.Add(key);
-        ///    values.Add();
+            if (this.Contains(key))
+                throw new InvalidOperationException("This key is exist in current HashTable");
+            
+            
         }
 
+        private int GetIndex(TKey key)
+        {
+            return key.GetHashCode() % capacity;
+        }
+
+        public bool Contains(TKey key)
+        {
+            Segment suitable = segments[GetIndex(key)];
+            if (suitable == null)
+                return false;
+
+            foreach (int index in suitable.indexes)
+            {
+                if (key.Equals(keys[index]))
+                    return true;
+            }
+            return false;
+        }
+
+        
+
+        
+
+
+       
     }
 }
