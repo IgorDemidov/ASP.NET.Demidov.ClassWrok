@@ -8,6 +8,15 @@ namespace HashTable.Task3.Library
 {
     class Segment
     {
-        public int[] indexes;
+        private List<int> indexes = null;
+
+        public List<int> Indexes { get { return indexes; } }
+
+        public void AddIndex(int index)
+        {
+            if (indexes == null)
+                indexes = new List<int>();
+            indexes.Add(index);
+        }
     }
 }
