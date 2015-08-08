@@ -13,28 +13,47 @@ namespace HashTable.Task3.Library
         private List<TValue> values;
         private int capacity;
         private int count;
+        private readonly double loadFactor = 1.0;
+
+        #region Constructors
 
         public CustomHashTable() : this(0) { }
+
         public CustomHashTable(int capacity)   //main ctor
         {
+            if (capacity < 0)
+                throw new ArgumentOutOfRangeException("Capacity cannot be negative", "capacity");
+
             segments = new Segment[capacity];
         }
+       
+        public CustomHashTable(int capacity, double loadFactor)
+            : this(capacity)
+        {
+            if ((loadFactor < 0.1) || (loadFactor > 1.0))
+                throw new ArgumentOutOfRangeException("LoadFactor should be in the range from 0.1 through 1.0","loadFactor");
 
+            this.loadFactor = loadFactor;
+        }
+
+        #endregion
+        
         public void Add(TKey key, TValue value)
         {
             if (this.Contains(key))
-                throw new InvalidOperationException("This key is exist in current HashTable");
-            
-            
+                throw new InvalidOperationException("This key is already exist in current hashtable");
+
+
+            count++;
         }
 
-        private int GetIndex(TKey key)
-        {
-            return key.GetHashCode() % capacity;
-        }
+        
 
         public bool Contains(TKey key)
         {
+            if (segments.Length == 0)
+                return false;
+
             Segment suitable = segments[GetIndex(key)];
             if (suitable == null)
                 return false;
@@ -46,6 +65,28 @@ namespace HashTable.Task3.Library
             }
             return false;
         }
+
+        #region Private Methods
+
+        private int GetIndex(TKey key)
+        {
+            return key.GetHashCode() % capacity;
+        }
+
+        private bool IsNeedsExpanding()
+        {
+            if (capacity == 0)
+                return true;
+
+            double actualLoadFactor = count / capacity;
+            if (actualLoadFactor >= loadFactor)
+                return true;
+            else
+                return false;
+        }
+
+        #endregion
+       
 
         
 
