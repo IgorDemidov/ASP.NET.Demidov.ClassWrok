@@ -8,9 +8,13 @@ namespace BinaryTree.Task2.Library
 {
     public class BinaryTree<T> where T: IComparable<T>
     {
+        #region PrivateFields
+
         private BinaryNode<T> root;
         private IComparer<T> comparer = Comparer<T>.Default;
         private int count = 0;
+
+        #endregion
 
         #region Properties
 
@@ -38,7 +42,9 @@ namespace BinaryTree.Task2.Library
         }
         
         #endregion
-        
+
+        #region Public methods
+
         public void Clear()
         {
             root = null;
@@ -48,7 +54,7 @@ namespace BinaryTree.Task2.Library
         public void Add(T data)
         {
             if (data == null)
-                throw new ArgumentNullException("Data cannot be null","data");
+                throw new ArgumentNullException("Data cannot be null", "data");
 
             if (root == null)
             {
@@ -95,6 +101,8 @@ namespace BinaryTree.Task2.Library
             return true;
         }
 
+        #endregion
+        
         #region Private methods
 
         private void AddNode(BinaryNode<T> parent, T data)
@@ -161,6 +169,6 @@ namespace BinaryTree.Task2.Library
         }
 
         #endregion
-        
+
     }
 }
