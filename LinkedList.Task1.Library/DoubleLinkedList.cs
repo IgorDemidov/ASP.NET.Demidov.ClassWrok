@@ -50,7 +50,7 @@ namespace LinkedList.Task1.Library
         public bool Contains(T data)
         {
             if (root == null)
-                throw new ArgumentNullException();
+                throw new NullReferenceException();
 
             foreach (var item in this)
             {

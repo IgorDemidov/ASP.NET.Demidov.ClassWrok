@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace BinaryTree.Task2.Library
 {
-    public class BinaryNode<T>
+    class BinaryNode<T>
     {
         private T data;
         private BinaryNode<T> left;
         private BinaryNode<T> right;
+        private BinaryNode<T> parent;
 
         public T Data 
         {
@@ -19,12 +20,15 @@ namespace BinaryTree.Task2.Library
         }
 
         public BinaryNode() { }
-        public BinaryNode(T data, BinaryNode<T> left, BinaryNode<T> right)
+        public BinaryNode(BinaryNode<T> parent, T data, BinaryNode<T> left, BinaryNode<T> right)//main ctor
         {
             this.data = data;
             this.left = left;
             this.right = right;
+            this.parent = parent;
         }
+        public BinaryNode(BinaryNode<T> parent, T data)
+            : this(parent, data, null, null) { }
 
         public BinaryNode<T> Left 
         {
@@ -36,6 +40,12 @@ namespace BinaryTree.Task2.Library
         {
             get { return right; }
             set { right = value; }
+        }
+
+        public BinaryNode<T> Parent
+        {
+            get { return parent; }
+            set { parent = value; }
         }
 
 
